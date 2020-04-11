@@ -3,7 +3,7 @@ package com.cs435.part2;
 import java.util.*;
 
 public class Main {
-
+    static int dijkstraFinalize = 0, astarFinalize = 0;
     public static void main(String[] args) {
         Main run = new Main();
         // Test for Top sort
@@ -19,25 +19,22 @@ public class Main {
         }
 
         // Test for dijkstra
-        WeightedGraph wg = run.createRandomCompleteWeightedGraph(10);
-        Node first = wg.graph.get(3);
-        for(Node adj : first.adj.keySet()){
-            System.out.println("First's edge to " + adj.val + " is " + first.adj.get(adj));
-        }
+        WeightedGraph wg = run.createRandomCompleteWeightedGraph(100);
 
         HashMap<Node, Integer> distance = run.dijkstras(wg.graph.get(3));
         for(Node node : distance.keySet())
             System.out.println("Node " + node.val + " : " + distance.get(node));
-
+        System.out.println("For dijkstra, the total number of finalize nodes is " + dijkstraFinalize);
         // test for A star
-        GridGraph gg = run.createRandomGridGraph(100);
+        GridGraph gg = run.createRandomGridGraph(10);
         GridNode source = gg.graph.get(0), dest = gg.graph.get(gg.graph.size() - 1);
-        System.out.println("Ending node: " + dest.x + " : " + dest.y);
+
         List<GridNode> retAstar = run.astar(source, dest);
 
         for(GridNode adjNode : retAstar){
             System.out.println(adjNode.val + " " + adjNode.x + " : " + adjNode.y);
         }
+        System.out.println("For A star, the total number of finalize nodes is " + astarFinalize);
     }
 
     public DirectedGraph createRandomDAGIter(final int n){
@@ -165,6 +162,7 @@ public class Main {
                     ret.put(adjNode, weight + prevWeight);
                 }
             }
+            dijkstraFinalize++;
             visited.add(curr);
         }
         return ret;
@@ -223,6 +221,7 @@ public class Main {
                     next = adjNode;
                 }
             }
+            astarFinalize++;
             visited.add(curr);
             if(next.val == curr.val){
                 System.out.println("Fail due to unconnected edge!");
