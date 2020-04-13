@@ -19,7 +19,7 @@ public class Main {
         }
 
         // Test for dijkstra
-        WeightedGraph wg = run.createRandomCompleteWeightedGraph(100);
+        WeightedGraph wg = run.createRandomCompleteWeightedGraph(10);
 
         HashMap<Node, Integer> distance = run.dijkstras(wg.graph.get(3));
         for(Node node : distance.keySet())
@@ -148,7 +148,7 @@ public class Main {
     public HashMap<Node, Integer> dijkstras(final Node start){
         HashMap<Node, Integer> ret = new HashMap<>();
         Set<Node> visited = new HashSet<>();
-        Queue<Node> q = new LinkedList<>();
+        Queue<Node> q = new PriorityQueue<>((a, b) -> ((ret.containsKey(a) ? ret.get(a) : 0) - (ret.containsKey(b) ? ret.get(b) : 0)));
         ret.put(start, 0);
         q.add(start);
         while(!q.isEmpty()) {
