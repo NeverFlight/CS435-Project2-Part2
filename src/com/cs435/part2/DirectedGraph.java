@@ -9,10 +9,14 @@ public class DirectedGraph {
         graph.add(new Node(nodeVal));
     }
     public void addDirectedEdge(final Node first, final Node second){
-        first.adj.put(second, 0);
+        if(first != null && second != null)
+            first.adj.put(second, 0);
+        else System.out.println("Node doesn't exist!");
     }
     public void removeDirectedEdge(final Node first, final Node second){
-        first.adj.remove(second);
+        if(first != null && second != null)
+            first.adj.remove(second);
+        else System.out.println("Node doesn't exist!");
     }
     public HashSet<Node> getAllNodes(){
         return new HashSet<>(graph);

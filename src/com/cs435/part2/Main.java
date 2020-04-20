@@ -180,11 +180,9 @@ public class Main {
         }
         for(int i = 0; i < gg.graph.size();i++){
             GridNode curr = gg.graph.get(i);
-            int currX = curr.x;
-            int currY = curr.y;
             for(int[] direction : directions){
-                int newX = currX + direction[0];
-                int newY = currY + direction[1];
+                int newX = curr.x + direction[0];
+                int newY = curr.y + direction[1];
                 if(newX >= 0 && newX < n && newY >= 0 && newY < n){
                     if(rand.nextBoolean()){
                         GridNode newNode = gg.graph.get(newX * n  + newY);
