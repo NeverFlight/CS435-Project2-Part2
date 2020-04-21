@@ -200,7 +200,7 @@ public class Main {
         Map<GridNode, Integer> distance = new HashMap<>();
         Set<GridNode> visited = new HashSet<>();
         ArrayList<GridNode> ret = new ArrayList<>();
-        distance.put(sourceNode, H(sourceNode, destNode));
+        distance.put(sourceNode, HeuristicFunction(sourceNode, destNode));
         int G = 0;
         GridNode curr = sourceNode;
         while(curr.val != destNode.val){
@@ -210,7 +210,7 @@ public class Main {
             int minF = Integer.MAX_VALUE;
             for(GridNode adjNode : curr.adj){
                 if(visited.contains(adjNode)) continue;
-                int F = G + H(adjNode,destNode);
+                int F = G + HeuristicFunction(adjNode,destNode);
                 if(!distance.containsKey(adjNode) || (G < distance.get(adjNode))){
                     distance.put(adjNode, G);
                 }
@@ -223,14 +223,15 @@ public class Main {
             visited.add(curr);
             if(next.val == curr.val){
                 System.out.println("Fail due to unconnected edge!");
-                break;
+                return null;
             }
             curr = next;
         }
+        ret.add(curr);
         return ret;
     }
 
-    public int H(final GridNode sourceNode, final GridNode destNode){
+    public int HeuristicFunction(final GridNode sourceNode, final GridNode destNode){
         return Math.abs(sourceNode.x - destNode.x) + Math.abs(sourceNode.y - destNode.y);
     }
 }
